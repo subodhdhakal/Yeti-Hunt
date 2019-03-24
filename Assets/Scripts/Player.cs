@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Player : MonoBehaviour
 {
     public GameObject player;
-    public string run_trigger;
+
     Rigidbody2D _rig;
     Animator _player;
  
@@ -20,11 +21,13 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            if(Input.GetKey("left"))
-            {
-                _player.SetTrigger(run_trigger);
-            }
-        
-
+        run();
     }
-}
+    
+    private void run()
+        {
+            float controlThrow = CrossPlatformInputManager.GetAxis("Horizontal");
+            Vector2 playervelocity = new Vector2(controlThrow, _rig.velocity.y);
+            _rig.velocity = playervelocity;
+        }
+    }

@@ -8,13 +8,13 @@ public class Player : MonoBehaviour
     public GameObject player;
 
     Rigidbody2D _rig;
-    Animator _player;
+    private Animator _player;
  
     // Start is called before the first frame update
     void Start()
     {
-         _rig = GetComponent<Rigidbody2D>();
-        _player = GetComponent<Animator>();
+         _rig = this.GetComponent<Rigidbody2D>();
+        _player= this.GetComponentInChildren<Animator>();
 
     }
 
@@ -26,8 +26,7 @@ public class Player : MonoBehaviour
     
     private void run()
         {
-            float controlThrow = CrossPlatformInputManager.GetAxis("Horizontal");
-            Vector2 playervelocity = new Vector2(controlThrow, _rig.velocity.y);
-            _rig.velocity = playervelocity;
+        if (Input.GetKeyDown("a"))
+            _player.SetTrigger("run");
         }
     }

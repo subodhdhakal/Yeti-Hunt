@@ -9,26 +9,34 @@ public class Player : MonoBehaviour
     private Animator _anim;
 
     [SerializeField]
-    private float speed;
+    private float speed = 0;
     [SerializeField]
     private float jumpForce = 5.0f;
-    [SerializeField]
-    private bool on_ground = false;
     [SerializeField]
     private LayerMask ground_layer;
     private bool need_jump_reset = false;
     // Start is called before the first frame update
+
     void Start()
     {
-         _rigid = this.GetComponent<Rigidbody2D>();
-        _anim= this.GetComponentInChildren<Animator>();
+        _rigid = this.GetComponent<Rigidbody2D>();
+        _anim = this.GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
     void Update()
-    { 
+    {
         Movement();
-        isGrounded();  //Check using Raycast if the player is grounded to avoid air-jump.
+        //isGrounded();  //Check using Raycast if the player is grounded to avoid air-jump.
+        if (CrossPlatformInputManager.GetButton("A") && isGrounded() == true)
+        {
+            attack();
+        }
+
+        if (CrossPlatformInputManager.GetButton("S") && isGrounded() == true)
+        {
+            attack2();
+        }
     }
 
     void Movement()
@@ -41,20 +49,15 @@ public class Player : MonoBehaviour
         _rigid.velocity = new Vector2(moveSpeed * speed, _rigid.velocity.y);
         _anim.SetFloat("moveSpeed", Mathf.Abs(moveSpeed));
 
-        if (CrossPlatformInputManager.GetButton("Jump") && on_ground == true)
+        if (CrossPlatformInputManager.GetButton("Jump") && isGrounded() == true)
         {
             _anim.SetTrigger("jump");
-            JumpAnimationRoutine();
             _rigid.velocity = new Vector2(_rigid.velocity.x, jumpForce);
-            
-
-            on_ground = false;
-            need_jump_reset = true;
             StartCoroutine(NeedJumpResetRoutine());
         }
     }
 
-    void isGrounded()
+    bool isGrounded()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, ground_layer.value);
         //(1 << 8) layermask is 32-bit int array. To make layermask = 8(ground layer) , we need to bit-shift 1
@@ -65,20 +68,30 @@ public class Player : MonoBehaviour
         {
             Debug.Log("hit:" + hit.collider.name); //Raycast collision check
 
-            if (need_jump_reset == false)
-                on_ground = true;
+            if (need_jump_reset == false)   // if not jumping - player is on ground
+            {
+                return true;
+            }
         }
+        return false;
     }
 
     IEnumerator NeedJumpResetRoutine()
     {
+        need_jump_reset = true;
         yield return new WaitForSeconds(0.1f); //wait 10th of second
         need_jump_reset = false;
     }
 
-    IEnumerator JumpAnimationRoutine()
+    void attack()
     {
-        
-        yield return new WaitForSeconds(0.30f);
+        _anim.SetTrigger("Attack");
+        Debug.Log("Attack Animation has been played");
+    }
+
+    void attack2()
+    { 
+        _anim.SetTrigger("Attack2");
+        Debug.Log("Attack 1 Animation has been played");
     }
 }

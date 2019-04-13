@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private LayerMask ground_layer;
     private bool need_jump_reset = false;
+
+    public GameObject sword;
     // Start is called before the first frame update
 
     void Start()
@@ -27,15 +29,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
-        //isGrounded();  //Check using Raycast if the player is grounded to avoid air-jump.
-        if (CrossPlatformInputManager.GetButton("A") && isGrounded() == true)
+        if (Input.GetKeyDown("r"))
         {
-            attack();
-        }
-
-        if (CrossPlatformInputManager.GetButton("S") && isGrounded() == true)
-        {
-            attack2();
+            if (sword.activeInHierarchy)
+                sword.SetActive(false);
+            else
+                sword.SetActive(true);
         }
     }
 
@@ -48,13 +47,15 @@ public class Player : MonoBehaviour
 
         _rigid.velocity = new Vector2(moveSpeed * speed, _rigid.velocity.y);
         _anim.SetFloat("moveSpeed", Mathf.Abs(moveSpeed));
+    }
 
-        if (CrossPlatformInputManager.GetButton("Jump") && isGrounded() == true)
-        {
-            _anim.SetTrigger("jump");
-            _rigid.velocity = new Vector2(_rigid.velocity.x, jumpForce);
-            StartCoroutine(NeedJumpResetRoutine());
-        }
+    public void Jump()
+    {
+        if (!isGrounded())
+            return;
+        _anim.SetTrigger("jump");
+        _rigid.velocity = new Vector2(_rigid.velocity.x, jumpForce);
+        StartCoroutine(NeedJumpResetRoutine());
     }
 
     bool isGrounded()
@@ -83,13 +84,13 @@ public class Player : MonoBehaviour
         need_jump_reset = false;
     }
 
-    void attack()
+    public void attack()
     {
         _anim.SetTrigger("Attack");
         Debug.Log("Attack Animation has been played");
     }
 
-    void attack2()
+    public void attack2()
     { 
         _anim.SetTrigger("Attack2");
         Debug.Log("Attack 1 Animation has been played");

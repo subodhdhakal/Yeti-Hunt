@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
 
     public void Jump()
     {
+        Debug.Log("jump.." + Time.time);
         if (!isGrounded())
             return;
         _anim.SetTrigger("jump");

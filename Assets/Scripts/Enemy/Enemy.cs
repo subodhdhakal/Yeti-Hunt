@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
 
     //handle to player object
     protected Player player;
-
+   
     public virtual void Init()
     {
         anim = GetComponentInChildren<Animator>();

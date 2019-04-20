@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
         isSpawning = true;
         Debug.Log("Spawning in 5 seconds...");
         Instantiate(player, playerInstantiationPoint.transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(Random.Range(10.0f,30.0f));
+        yield return new WaitForSeconds(7.0f);
         isSpawning = false;
     }
 }

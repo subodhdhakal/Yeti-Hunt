@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Yeti : Enemy, IDamageable
 {
+    public GameObject SnowBallEffect;
+
     public int Health { get; set; }
     
 
@@ -16,7 +18,7 @@ public class Yeti : Enemy, IDamageable
 
     public void Damage()
     {
-        Debug.Log("Big Yeti Damage!");
+        //Debug.Log("Big Yeti Damage!");
 
         Health--;
         anim.SetTrigger("hurt");
@@ -24,8 +26,23 @@ public class Yeti : Enemy, IDamageable
 
         if (Health < 1)
         {
-            Destroy(this.gameObject);
+            isDead = true;
+            anim.SetTrigger("Death");
+            StartCoroutine(NeedObjectDestroy());
         }
     }
    
+    public void Attack()
+    {
+        //Instantiate the SnowBall Effect
+        Instantiate(SnowBallEffect, transform.position, Quaternion.identity);
+
+    }
+
+    IEnumerator NeedObjectDestroy()
+    {
+        yield return new WaitForSeconds(1.5f); //wait 2 sec
+        //Destroy(this.gameObject);
+    }
 }
+

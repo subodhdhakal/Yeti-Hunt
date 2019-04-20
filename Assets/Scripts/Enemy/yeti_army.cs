@@ -15,13 +15,21 @@ public class Yeti_Army : Enemy, IDamageable
 
     public void Damage()
     {
-        Debug.Log("Small Yeti Damage called");
+       // Debug.Log("Small Yeti Damage called");
         anim.SetTrigger("hurt");
         Health--;
 
         if (Health < 1)
         {
-            Destroy(this.gameObject);
+            isDead = true;
+            anim.SetTrigger("Death");
+            StartCoroutine(NeedObjectDestroy());
         }
+    }
+
+    IEnumerator NeedObjectDestroy()
+    {
+        yield return new WaitForSeconds(2.0f); //wait 2 sec
+        Destroy(this.gameObject);
     }
 }

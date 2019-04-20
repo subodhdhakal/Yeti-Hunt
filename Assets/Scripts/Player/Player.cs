@@ -89,7 +89,8 @@ public class Player : MonoBehaviour, IDamageable
 
     public void Damage()
     {
-        Debug.Log("Player Damage called");
+        //Debug.Log("Player Damage called");
+
     }
 
     public void attack()

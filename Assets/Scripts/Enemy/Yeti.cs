@@ -16,8 +16,11 @@ public class Yeti : Enemy, IDamageable
 
     public void Damage()
     {
-        Debug.Log("Damage!");
+        Debug.Log("Big Yeti Damage!");
+
         Health--;
+        anim.SetTrigger("hurt");
+        //isHurt = true;
 
         if (Health < 1)
         {

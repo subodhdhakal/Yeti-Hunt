@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     Rigidbody2D _rigid;
-    private Animator _anim;
+    private Animator _playeranim;
 
     [SerializeField]
     private float speed = 0;
@@ -16,13 +16,15 @@ public class Player : MonoBehaviour
     private LayerMask ground_layer;
     private bool need_jump_reset = false;
 
+    public int Health { get; set; }
+
     public GameObject sword;
     // Start is called before the first frame update
 
     void Start()
     {
         _rigid = this.GetComponent<Rigidbody2D>();
-        _anim = this.GetComponentInChildren<Animator>();
+        _playeranim = this.GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -46,7 +48,7 @@ public class Player : MonoBehaviour
             transform.localScale = new Vector3(-1 * transform.localScale.x, transform.localScale.y, transform.localScale.z);
 
         _rigid.velocity = new Vector2(moveSpeed * speed, _rigid.velocity.y);
-        _anim.SetFloat("moveSpeed", Mathf.Abs(moveSpeed));
+        _playeranim.SetFloat("moveSpeed", Mathf.Abs(moveSpeed));
     }
 
     public void Jump()
@@ -54,7 +56,7 @@ public class Player : MonoBehaviour
         Debug.Log("jump.." + Time.time);
         if (!isGrounded())
             return;
-        _anim.SetTrigger("jump");
+        _playeranim.SetTrigger("jump");
         _rigid.velocity = new Vector2(_rigid.velocity.x, jumpForce);
         StartCoroutine(NeedJumpResetRoutine());
     }
@@ -85,15 +87,22 @@ public class Player : MonoBehaviour
         need_jump_reset = false;
     }
 
+    public void Damage()
+    {
+        Debug.Log("Player Damage called");
+    }
+
     public void attack()
     {
-        _anim.SetTrigger("Attack");
-        Debug.Log("Attack Animation has been played");
+        _playeranim.SetTrigger("Attack");
+       // Debug.Log("Attack Animation has been played");
     }
 
     public void attack2()
     { 
-        _anim.SetTrigger("Attack2");
-        Debug.Log("Attack 1 Animation has been played");
+        _playeranim.SetTrigger("Attack2");
+        // Debug.Log("Attack 1 Animation has been played");
     }
+
+   
 }

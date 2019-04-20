@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     protected bool facingLeft = true;
     protected bool isDead = false;
     protected int initialHealth;
+    protected bool isHurt = false;
 
     //protected Vector3 currentTarget;
     protected Animator anim;
@@ -67,13 +68,17 @@ public class Enemy : MonoBehaviour
         //if player is in the zone
         if (distance >= attackingDistance)
         {
+            
             anim.SetBool("InCombat", false);
+            //isHurt = false;
             if (playerpos.x > pointA.position.x && playerpos.x < pointB.position.x)
             {
                 //walk toward player
-                transform.position = Vector3.MoveTowards(transform.localPosition, playerpos, (speed) * Time.deltaTime);
-                anim.SetBool("Walk", true);
+               
+                    transform.position = Vector3.MoveTowards(transform.localPosition, playerpos, (speed) * Time.deltaTime);
+                    anim.SetBool("Walk", true);
             }
+
             else
             {
                 //idle

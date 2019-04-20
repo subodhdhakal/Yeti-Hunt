@@ -9,11 +9,19 @@ public class Yeti_Army : Enemy, IDamageable
     public override void Init()
     {
         base.Init();
+        Health = base.health;
 
     }
 
     public void Damage()
     {
+        Debug.Log("Small Yeti Damage called");
+        anim.SetTrigger("hurt");
+        Health--;
 
+        if (Health < 1)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

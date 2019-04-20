@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour
     IEnumerator SpawnPlayerRoutine()
     {
         isSpawning = true;
-        Debug.Log("Spawning in 5 seconds...");
         //Instantiate(player, playerInstantiationPoint.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(70.0f);
         isSpawning = false;

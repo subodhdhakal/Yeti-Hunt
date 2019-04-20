@@ -115,12 +115,12 @@ public class Enemy : MonoBehaviour
             facingLeft = true;
         }
     }
-
+    /*
     public virtual void Damage()
     {
         //anim.SetTrigger("Hit");
 
         //soundManagerScript.PlaySound("enemyHit");
         anim.SetBool("InCombat", true);
-    }
+    } */ 
 }

@@ -9526,6 +9526,7 @@ GameObject:
   - component: {fileID: 1641525878}
   - component: {fileID: 1641525879}
   - component: {fileID: 1641525880}
+  - component: {fileID: 1641525881}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -9560,7 +9561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4000d95c403bea043832235922cc0537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 3
   speed: 2
   pointA: {fileID: 3365879209536739001, guid: 7447892289577d844b01a833ca7f2ec6, type: 3}
   pointB: {fileID: 6264854442454689237, guid: 848a70151efc55145a5f748b26efa09f, type: 3}
@@ -9591,6 +9592,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.1492572, y: 3.5973263}
   m_EdgeRadius: 0
+--- !u!114 &1641525881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641525877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdaf2ad0637fe744093dfd8e652c6863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
+  speed: 2
+  pointA: {fileID: 3365879209536739001, guid: 7447892289577d844b01a833ca7f2ec6, type: 3}
+  pointB: {fileID: 6264854442454689237, guid: 848a70151efc55145a5f748b26efa09f, type: 3}
+  attackingDistance: 0
 --- !u!4 &1664732961 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6413874505425250004, guid: e3226876e98364c409e6268832c40dab,

@@ -2,8 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Yeti : Enemy
+public class Yeti : Enemy, IDamageable
 {
+    public int Health { get; set; }
+    
+
+    public override void Init()
+    {
+        base.Init();
+
+    }
+
+    public void Damage()
+    {
+
+    }
     //private bool _switch;
     //private Animator _anim;
     //private void Start()

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamageable
 {
     Rigidbody2D _rigid;
     private Animator _playeranim;
 
+    [SerializeField]
+    private float MaxHealth = 5;
     [SerializeField]
     private float speed = 0;
     [SerializeField]
@@ -16,7 +19,10 @@ public class Player : MonoBehaviour, IDamageable
     private LayerMask ground_layer;
     private bool need_jump_reset = false;
 
-    public int Health { get; set; }
+    //Player HealthBar
+    public Slider healthbar;
+
+    public float Health { get; set; }
 
     public GameObject sword;
     // Start is called before the first frame update
@@ -25,6 +31,10 @@ public class Player : MonoBehaviour, IDamageable
     {
         _rigid = this.GetComponent<Rigidbody2D>();
         _playeranim = this.GetComponentInChildren<Animator>();
+
+        Health = MaxHealth;
+
+        healthbar.value = CalculateHealth();
     }
 
     // Update is called once per frame
@@ -89,9 +99,16 @@ public class Player : MonoBehaviour, IDamageable
 
     public void Damage()
     {
-        //Debug.Log("Player Damage called");
+        Debug.Log("Player Damage called from Player script");
+        //_playeranim.SetTrigger("");
+        float damageValue = 0.7f;
+        Health -= damageValue;
+        healthbar.value = CalculateHealth();
 
-    }
+        if (Health <= 0)
+            Destroy(this.gameObject);
+
+}
 
     public void attack()
     {
@@ -105,5 +122,9 @@ public class Player : MonoBehaviour, IDamageable
         // Debug.Log("Attack 1 Animation has been played");
     }
 
+    float CalculateHealth()
+    {
+        return Health / MaxHealth;
+    }
    
 }

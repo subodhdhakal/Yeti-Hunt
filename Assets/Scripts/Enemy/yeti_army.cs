@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Yeti_Army : Enemy, IDamageable
 {
-    public int Health { get; set; }
+    public float Health { get; set; }
 
     public override void Init()
     {

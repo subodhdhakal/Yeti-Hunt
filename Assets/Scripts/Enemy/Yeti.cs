@@ -6,7 +6,7 @@ public class Yeti : Enemy, IDamageable
 {
     public GameObject SnowBallEffect;
 
-    public int Health { get; set; }
+    public float Health { get; set; }
     
 
     public override void Init()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    protected int health;
+    protected float health;
     [SerializeField]
     protected float speed;
     [SerializeField]
@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
 
     protected bool facingLeft = true;
     protected bool isDead = false;
-    protected int initialHealth;
+    protected float initialHealth;
     protected bool isHurt = false;
 
     //protected Vector3 currentTarget;

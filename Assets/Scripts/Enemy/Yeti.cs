@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Yeti : Enemy, IDamageable
 {
     public GameObject SnowBallEffect;
 
-    public float Health { get; set; }
-    
+    //Yeti Health Bar
+    public float Health { get; set; } = 5.0f;
+    public Slider healthbar;
+    [SerializeField]
+    private float MaxHealth = 5.0f;
     //Audio or Sound Effects
     [SerializeField]
     AudioClip deathSound;
@@ -19,22 +23,19 @@ public class Yeti : Enemy, IDamageable
     [SerializeField] [Range(0, 1)]
     float soundVolume = 0.75f;
 
-    public override void Init()
-    {
-        base.Init();
-        Health = base.health;
-
-    }
-
     public void Damage()
     {
         //Debug.Log("Big Yeti Damage!");
 
-        Health--;
+        //Health--;
         anim.SetTrigger("hurt");
         //isHurt = true;
         AudioSource.PlayClipAtPoint(stabSound, this.gameObject.transform.position);
         AudioSource.PlayClipAtPoint(hurtSound, this.gameObject.transform.position);
+
+        float damageValue = 0.7f;
+        Health -= damageValue;
+        healthbar.value = CalculateHealth();
 
         if (Health <= 0)
         {
@@ -45,7 +46,12 @@ public class Yeti : Enemy, IDamageable
             SceneManager.LoadScene("YouWin", LoadSceneMode.Additive);
         }
     }
-   
+
+    float CalculateHealth()
+    {
+        return Health / MaxHealth;
+    }
+
     public void Attack()
     {
         //Instantiate the SnowBall Effect

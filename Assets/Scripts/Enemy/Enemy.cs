@@ -75,8 +75,8 @@ public class Enemy : MonoBehaviour
             {
                 //walk toward player
                
-                    transform.position = Vector3.MoveTowards(transform.localPosition, playerpos, (speed) * Time.deltaTime);
-                    anim.SetBool("Walk", true);
+                transform.position = Vector3.MoveTowards(transform.localPosition, playerpos, (speed) * Time.deltaTime);
+                anim.SetBool("Walk", true);
             }
 
             else

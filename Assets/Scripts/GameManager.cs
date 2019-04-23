@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     {
         isSpawning = true;
         //Instantiate(player, playerInstantiationPoint.transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(70.0f);
+        yield return new WaitForSeconds(0.0f);
         isSpawning = false;
     }
 }

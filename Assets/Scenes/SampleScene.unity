@@ -10374,6 +10374,10 @@ MonoBehaviour:
   attackingDistance: 2
   SnowBallEffect: {fileID: 8602533968236110164, guid: accb2710b3da81640ae09a4745c67db7,
     type: 3}
+  deathSound: {fileID: 8300000, guid: dcdbecef11049aa408b132f4017e5581, type: 3}
+  hurtSound: {fileID: 8300000, guid: f9d8a16e5d1052843995a1cf92f0f97e, type: 3}
+  stabSound: {fileID: 8300000, guid: b444547e4c7a7b442946f77f0e7d9a39, type: 3}
+  soundVolume: 0.5
 --- !u!1 &1661162529
 GameObject:
   m_ObjectHideFlags: 0
@@ -12986,6 +12990,10 @@ MonoBehaviour:
   pointA: {fileID: 1810624104246806389, guid: 8700a36dbe4d5b64cb38afd772a4372f, type: 3}
   pointB: {fileID: 2066281936284700326, guid: 66086eb3aabe4974690a33b129b244f7, type: 3}
   attackingDistance: 1.5
+  deathSound: {fileID: 8300000, guid: dcdbecef11049aa408b132f4017e5581, type: 3}
+  hurtSound: {fileID: 8300000, guid: 4fd06c1c28b5baa4abedbf4305041db9, type: 3}
+  stabSound: {fileID: 8300000, guid: b444547e4c7a7b442946f77f0e7d9a39, type: 3}
+  soundVolume: 0.75
 --- !u!1 &4778843749338533139
 GameObject:
   m_ObjectHideFlags: 0
@@ -14791,6 +14799,11 @@ MonoBehaviour:
     m_Bits: 256
   healthbar: {fileID: 1051447150}
   sword: {fileID: 7531355571770295685}
+  soundVolume: 1
+  jumpSound: {fileID: 8300000, guid: 6dcefcd02690a0b4f868595796249eaf, type: 3}
+  attackSound: {fileID: 8300000, guid: 421564f4dcb581e419580ecefd51cc0b, type: 3}
+  hurtSound: {fileID: 8300000, guid: 18649f36c999d0e41a9808a0fea73f3e, type: 3}
+  dieSound: {fileID: 8300000, guid: 8b71c9fc89d51bc49b9feccbe54f89f0, type: 3}
 --- !u!4 &7531355571770295684
 Transform:
   m_ObjectHideFlags: 0

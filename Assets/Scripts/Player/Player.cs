@@ -25,6 +25,19 @@ public class Player : MonoBehaviour, IDamageable
     public float Health { get; set; }
 
     public GameObject sword;
+
+    //Player Sound Effects
+    [SerializeField][Range(0, 1)]
+    float soundVolume = 0.75f;
+    [SerializeField]
+    AudioClip jumpSound;
+    [SerializeField]
+    AudioClip attackSound;
+    [SerializeField]
+    AudioClip hurtSound;
+    [SerializeField]
+    AudioClip dieSound;
+
     // Start is called before the first frame update
 
     void Start()
@@ -67,6 +80,7 @@ public class Player : MonoBehaviour, IDamageable
         if (!isGrounded())
             return;
         _playeranim.SetTrigger("jump");
+        AudioSource.PlayClipAtPoint(jumpSound, this.gameObject.transform.position);
         _rigid.velocity = new Vector2(_rigid.velocity.x, jumpForce);
         StartCoroutine(NeedJumpResetRoutine());
     }
@@ -100,20 +114,26 @@ public class Player : MonoBehaviour, IDamageable
     public void Damage()
     {
         Debug.Log("Player Damage called from Player script");
+        AudioSource.PlayClipAtPoint(hurtSound, this.gameObject.transform.position);
         //_playeranim.SetTrigger("");
         float damageValue = 0.7f;
         Health -= damageValue;
         healthbar.value = CalculateHealth();
 
         if (Health <= 0)
-            Destroy(this.gameObject);
-
+        {
+            AudioSource.PlayClipAtPoint(dieSound, this.gameObject.transform.position);
+            _playeranim.SetTrigger("Death");
+            Debug.Log("Destroy object called player");
+            StartCoroutine(DieAnimationResetRoutine());
+        }
 }
 
     public void attack()
     {
         _playeranim.SetTrigger("Attack");
-       // Debug.Log("Attack Animation has been played");
+        AudioSource.PlayClipAtPoint(attackSound, this.gameObject.transform.position);
+        //Debug.Log("Attack Animation has been played");
     }
 
     public void attack2()
@@ -126,5 +146,10 @@ public class Player : MonoBehaviour, IDamageable
     {
         return Health / MaxHealth;
     }
-   
+
+    IEnumerator DieAnimationResetRoutine()
+    {
+        yield return  new WaitForSeconds(2.0f);
+        Destroy(this.gameObject);
+    }
 }

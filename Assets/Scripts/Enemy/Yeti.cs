@@ -8,6 +8,15 @@ public class Yeti : Enemy, IDamageable
 
     public float Health { get; set; }
     
+    //Audio or Sound Effects
+    [SerializeField]
+    AudioClip deathSound;
+    [SerializeField]
+    AudioClip hurtSound;
+    [SerializeField]
+    AudioClip stabSound;
+    [SerializeField] [Range(0, 1)]
+    float soundVolume = 0.75f;
 
     public override void Init()
     {
@@ -23,11 +32,14 @@ public class Yeti : Enemy, IDamageable
         Health--;
         anim.SetTrigger("hurt");
         //isHurt = true;
+        AudioSource.PlayClipAtPoint(stabSound, this.gameObject.transform.position);
+        AudioSource.PlayClipAtPoint(hurtSound, this.gameObject.transform.position);
 
         if (Health < 1)
         {
             isDead = true;
             anim.SetTrigger("Death");
+            AudioSource.PlayClipAtPoint(deathSound, this.gameObject.transform.position);
             StartCoroutine(NeedObjectDestroy());
         }
     }

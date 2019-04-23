@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour, IDamageable
 {
@@ -27,12 +28,15 @@ public class Player : MonoBehaviour, IDamageable
     public GameObject sword;
 
     //Player Sound Effects
-    [SerializeField][Range(0, 1)]
+    [SerializeField]
+    [Range(0, 1)]
     float soundVolume = 0.75f;
     [SerializeField]
     AudioClip jumpSound;
     [SerializeField]
     AudioClip attackSound;
+    [SerializeField]
+    AudioClip attack2Sound;
     [SerializeField]
     AudioClip hurtSound;
     [SerializeField]
@@ -126,8 +130,10 @@ public class Player : MonoBehaviour, IDamageable
             _playeranim.SetTrigger("Death");
             Debug.Log("Destroy object called player");
             StartCoroutine(DieAnimationResetRoutine());
+            SceneManager.LoadScene("YouLose",LoadSceneMode.Additive);
+            
         }
-}
+    }
 
     public void attack()
     {
@@ -137,8 +143,9 @@ public class Player : MonoBehaviour, IDamageable
     }
 
     public void attack2()
-    { 
+    {
         _playeranim.SetTrigger("Attack2");
+        AudioSource.PlayClipAtPoint(attack2Sound, this.gameObject.transform.position);
         // Debug.Log("Attack 1 Animation has been played");
     }
 
@@ -149,7 +156,8 @@ public class Player : MonoBehaviour, IDamageable
 
     IEnumerator DieAnimationResetRoutine()
     {
-        yield return  new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(3.0f);
         Destroy(this.gameObject);
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 }

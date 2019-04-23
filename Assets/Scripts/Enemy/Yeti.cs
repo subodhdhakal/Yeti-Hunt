@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Yeti : Enemy, IDamageable
 {
@@ -35,12 +36,13 @@ public class Yeti : Enemy, IDamageable
         AudioSource.PlayClipAtPoint(stabSound, this.gameObject.transform.position);
         AudioSource.PlayClipAtPoint(hurtSound, this.gameObject.transform.position);
 
-        if (Health < 1)
+        if (Health <= 0)
         {
             isDead = true;
             anim.SetTrigger("Death");
             AudioSource.PlayClipAtPoint(deathSound, this.gameObject.transform.position);
             StartCoroutine(NeedObjectDestroy());
+            SceneManager.LoadScene("YouWin", LoadSceneMode.Additive);
         }
     }
    
@@ -53,8 +55,10 @@ public class Yeti : Enemy, IDamageable
 
     IEnumerator NeedObjectDestroy()
     {
-        yield return new WaitForSeconds(1.5f); //wait 2 sec
-        //Destroy(this.gameObject);
+        yield return new WaitForSeconds(3.0f); //wait 2 sec
+        Destroy(this.gameObject);
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 }
+
 

@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour, IDamageable
 {
+    //variable for Diamond
+    public int diamonds;
+
     Rigidbody2D _rigid;
     private Animator _playeranim;
 
@@ -57,7 +60,9 @@ public class Player : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        if(Health>0)
+            Movement();
+
         if (Input.GetKeyDown("r"))
         {
             if (sword.activeInHierarchy)
@@ -117,8 +122,11 @@ public class Player : MonoBehaviour, IDamageable
 
     public void Damage()
     {
+        if (Health <= 0)
+            return;
+
         Debug.Log("Player Damage called from Player script");
-        AudioSource.PlayClipAtPoint(hurtSound, this.gameObject.transform.position);
+        SoundManagerScript.PlaySound(SoundManagerScript.Sound.PlayerHurt);
         //_playeranim.SetTrigger("");
         float damageValue = 0.7f;
         Health -= damageValue;
@@ -126,11 +134,10 @@ public class Player : MonoBehaviour, IDamageable
 
         if (Health <= 0)
         {
-            AudioSource.PlayClipAtPoint(dieSound, this.gameObject.transform.position);
+            SoundManagerScript.PlaySound(SoundManagerScript.Sound.PlayerDie);
             _playeranim.SetTrigger("Death");
             Debug.Log("Destroy object called player");
             StartCoroutine(DieAnimationResetRoutine());
-            SceneManager.LoadScene("YouLose",LoadSceneMode.Additive);
             
         }
     }
@@ -138,14 +145,14 @@ public class Player : MonoBehaviour, IDamageable
     public void attack()
     {
         _playeranim.SetTrigger("Attack");
-        AudioSource.PlayClipAtPoint(attackSound, this.gameObject.transform.position);
+        SoundManagerScript.PlaySound(SoundManagerScript.Sound.PlayerAttack);
         //Debug.Log("Attack Animation has been played");
     }
 
     public void attack2()
     {
         _playeranim.SetTrigger("Attack2");
-        AudioSource.PlayClipAtPoint(attack2Sound, this.gameObject.transform.position);
+        SoundManagerScript.PlaySound(SoundManagerScript.Sound.PlayerAttack);
         // Debug.Log("Attack 1 Animation has been played");
     }
 
@@ -158,6 +165,6 @@ public class Player : MonoBehaviour, IDamageable
     {
         yield return new WaitForSeconds(3.0f);
         Destroy(this.gameObject);
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        UIManager.Instance.DisplayGameEndScreen("You lose!");
     }
 }

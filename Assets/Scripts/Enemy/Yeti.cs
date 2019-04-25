@@ -9,10 +9,10 @@ public class Yeti : Enemy, IDamageable
     public GameObject SnowBallEffect;
 
     //Yeti Health Bar
-    public float Health { get; set; } = 5.0f;
+    public float Health { get; set; }
     public Slider healthbar;
     [SerializeField]
-    private float MaxHealth = 5.0f;
+    private float MaxHealth = 5;
     //Audio or Sound Effects
     [SerializeField]
     AudioClip deathSound;
@@ -23,15 +23,27 @@ public class Yeti : Enemy, IDamageable
     [SerializeField] [Range(0, 1)]
     float soundVolume = 0.75f;
 
+    void Start()
+    {
+        Health = MaxHealth;
+
+        healthbar.value = CalculateHealth();
+
+        base.Init();
+    }
+
     public void Damage()
     {
-        //Debug.Log("Big Yeti Damage!");
+        if (isDead)
+            return;
+
+        Debug.Log("Big Yeti Damage!");
 
         //Health--;
         anim.SetTrigger("hurt");
         //isHurt = true;
-        AudioSource.PlayClipAtPoint(stabSound, this.gameObject.transform.position);
-        AudioSource.PlayClipAtPoint(hurtSound, this.gameObject.transform.position);
+        SoundManagerScript.PlaySound(SoundManagerScript.Sound.stab);
+        SoundManagerScript.PlaySound(SoundManagerScript.Sound.YetiHurt);
 
         float damageValue = 0.7f;
         Health -= damageValue;
@@ -43,7 +55,6 @@ public class Yeti : Enemy, IDamageable
             anim.SetTrigger("Death");
             AudioSource.PlayClipAtPoint(deathSound, this.gameObject.transform.position);
             StartCoroutine(NeedObjectDestroy());
-            SceneManager.LoadScene("YouWin", LoadSceneMode.Additive);
         }
     }
 
@@ -63,7 +74,7 @@ public class Yeti : Enemy, IDamageable
     {
         yield return new WaitForSeconds(3.0f); //wait 2 sec
         Destroy(this.gameObject);
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        UIManager.Instance.DisplayGameEndScreen("You win");
     }
 }
 

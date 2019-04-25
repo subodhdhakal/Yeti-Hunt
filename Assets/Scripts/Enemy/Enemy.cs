@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public GameObject diamondPrefab;
+
     [SerializeField]
     protected float health;
     [SerializeField]
     protected float speed;
+    [SerializeField]
+    protected int gems;
     [SerializeField]
     protected Transform pointA, pointB;
     [SerializeField]

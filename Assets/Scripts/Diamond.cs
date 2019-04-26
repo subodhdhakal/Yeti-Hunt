@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Diamond : MonoBehaviour
 {
-    public int gems = 1;
+    public int gems = 5;
     public Transform pos;
 
     public void Start()
@@ -21,7 +22,7 @@ public class Diamond : MonoBehaviour
 
             if(player != null)
             {
-                player.diamonds += gems;
+                player.addDiamond();
                 Destroy(this.gameObject);
             }
         }

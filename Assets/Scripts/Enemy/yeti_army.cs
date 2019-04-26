@@ -6,23 +6,14 @@ public class Yeti_Army : Enemy, IDamageable
 {
     public float Health { get; set; }
 
-
-    [SerializeField]
-    AudioClip deathSound;
-    [SerializeField]
-    AudioClip hurtSound;
-    [SerializeField]
-    AudioClip stabSound;
-
-    [SerializeField] [Range(0, 1)]
-    float soundVolume = 0.75f;
+    //TO identify the type 1 or 2 yeti spawn points
     public int type = 0;
 
 
     public override void Init()
     {
         base.Init();
-        Health = base.health;
+        Health = base.health; //Gets health from the Enemy class
 
     }
 
@@ -33,8 +24,8 @@ public class Yeti_Army : Enemy, IDamageable
             return;
 
         anim.SetTrigger("hurt");
-        AudioSource.PlayClipAtPoint(stabSound, this.gameObject.transform.position);
-        AudioSource.PlayClipAtPoint(hurtSound, this.gameObject.transform.position);
+        SoundManagerScript.PlaySound(SoundManagerScript.Sound.stab);
+        SoundManagerScript.PlaySound(SoundManagerScript.Sound.YetiHurt);
 
         Health--;
 
@@ -42,10 +33,9 @@ public class Yeti_Army : Enemy, IDamageable
         {
             isDead = true;
             anim.SetTrigger("Death");
-            //diamond.GetComponent<Diamond>().gems = base.gems;
-            AudioSource.PlayClipAtPoint(deathSound, this.gameObject.transform.position);
-           
-           StartCoroutine(NeedObjectDestroy());
+            SoundManagerScript.PlaySound(SoundManagerScript.Sound.YetiDie);
+
+            StartCoroutine(NeedObjectDestroy());
         }
     }
 

@@ -46,7 +46,7 @@ public class EnemyDeployer : MonoBehaviour
     public bool deployed1;
     public bool deployed2;
     [SerializeField]
-    private int maxCount = 2;
+    private int maxCount = 1;
     public Transform point1;
     public Transform point2;
 

@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour, IDamageable
 {
     //variable for Diamond
-    public int diamonds;
+    private int diamonds = 0;
+
+    
 
     Rigidbody2D _rigid;
     private Animator _playeranim;
@@ -30,21 +32,6 @@ public class Player : MonoBehaviour, IDamageable
 
     public GameObject sword;
 
-    //Player Sound Effects
-    [SerializeField]
-    [Range(0, 1)]
-    float soundVolume = 0.75f;
-    [SerializeField]
-    AudioClip jumpSound;
-    [SerializeField]
-    AudioClip attackSound;
-    [SerializeField]
-    AudioClip attack2Sound;
-    [SerializeField]
-    AudioClip hurtSound;
-    [SerializeField]
-    AudioClip dieSound;
-
     // Start is called before the first frame update
 
     void Start()
@@ -62,14 +49,6 @@ public class Player : MonoBehaviour, IDamageable
     {
         if(Health>0)
             Movement();
-
-        if (Input.GetKeyDown("r"))
-        {
-            if (sword.activeInHierarchy)
-                sword.SetActive(false);
-            else
-                sword.SetActive(true);
-        }
     }
 
     void Movement()
@@ -89,7 +68,7 @@ public class Player : MonoBehaviour, IDamageable
         if (!isGrounded())
             return;
         _playeranim.SetTrigger("jump");
-        AudioSource.PlayClipAtPoint(jumpSound, this.gameObject.transform.position);
+        SoundManagerScript.PlaySound(SoundManagerScript.Sound.PlayerJump);
         _rigid.velocity = new Vector2(_rigid.velocity.x, jumpForce);
         StartCoroutine(NeedJumpResetRoutine());
     }
@@ -128,7 +107,7 @@ public class Player : MonoBehaviour, IDamageable
         Debug.Log("Player Damage called from Player script");
         SoundManagerScript.PlaySound(SoundManagerScript.Sound.PlayerHurt);
         //_playeranim.SetTrigger("");
-        float damageValue = 0.7f;
+        float damageValue = 0.2f;
         Health -= damageValue;
         healthbar.value = CalculateHealth();
 
@@ -145,7 +124,7 @@ public class Player : MonoBehaviour, IDamageable
     public void attack()
     {
         _playeranim.SetTrigger("Attack");
-        SoundManagerScript.PlaySound(SoundManagerScript.Sound.PlayerAttack);
+        SoundManagerScript.PlaySound(SoundManagerScript.Sound.swordswing);
         //Debug.Log("Attack Animation has been played");
     }
 
@@ -165,6 +144,17 @@ public class Player : MonoBehaviour, IDamageable
     {
         yield return new WaitForSeconds(3.0f);
         Destroy(this.gameObject);
-        UIManager.Instance.DisplayGameEndScreen("You lose!");
+        UIManager.Instance.DisplayGameEndScreen("You lose!\nDiamonds Collected: " + diamonds);
+    }
+
+    public void addDiamond()
+    {
+        diamonds++;
+        UIManager.Instance.diamondText.text = "Diamonds: " + diamonds ;
+    }
+
+    public int getDiamond()
+    {
+        return diamonds;
     }
 }

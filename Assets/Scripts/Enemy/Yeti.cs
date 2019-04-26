@@ -6,22 +6,12 @@ using UnityEngine.UI;
 
 public class Yeti : Enemy, IDamageable
 {
-    public GameObject SnowBallEffect;
 
     //Yeti Health Bar
     public float Health { get; set; }
     public Slider healthbar;
     [SerializeField]
     private float MaxHealth = 5;
-    //Audio or Sound Effects
-    [SerializeField]
-    AudioClip deathSound;
-    [SerializeField]
-    AudioClip hurtSound;
-    [SerializeField]
-    AudioClip stabSound;
-    [SerializeField] [Range(0, 1)]
-    float soundVolume = 0.75f;
 
     void Start()
     {
@@ -53,7 +43,7 @@ public class Yeti : Enemy, IDamageable
         {
             isDead = true;
             anim.SetTrigger("Death");
-            AudioSource.PlayClipAtPoint(deathSound, this.gameObject.transform.position);
+            SoundManagerScript.PlaySound(SoundManagerScript.Sound.YetiDie);
             StartCoroutine(NeedObjectDestroy());
         }
     }
@@ -65,8 +55,6 @@ public class Yeti : Enemy, IDamageable
 
     public void Attack()
     {
-        //Instantiate the SnowBall Effect
-        Instantiate(SnowBallEffect, transform.position, Quaternion.identity);
 
     }
 
@@ -74,7 +62,7 @@ public class Yeti : Enemy, IDamageable
     {
         yield return new WaitForSeconds(3.0f); //wait 2 sec
         Destroy(this.gameObject);
-        UIManager.Instance.DisplayGameEndScreen("You win");
+        UIManager.Instance.DisplayGameEndScreen("YOU WIN\n\n\nDiamonds Collected: " + player.getDiamond());
     }
 }
 

@@ -11,8 +11,6 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     protected float speed;
     [SerializeField]
-    protected int gems;
-    [SerializeField]
     protected Transform pointA, pointB;
     [SerializeField]
     protected float attackingDistance; //distance to start attacking
@@ -93,7 +91,9 @@ public class Enemy : MonoBehaviour
         {
             //idle and attack
             anim.SetBool("Walk", false);
-            anim.SetBool("InCombat", true);
+            if(!isDead)
+            StartCoroutine(EnemyDamageCd());
+            
         }
 
     }
@@ -124,12 +124,10 @@ public class Enemy : MonoBehaviour
             facingLeft = true;
         }
     }
-    /*
-    public virtual void Damage()
+   
+    IEnumerator EnemyDamageCd()
     {
-        //anim.SetTrigger("Hit");
-
-        //soundManagerScript.PlaySound("enemyHit");
+        yield return new WaitForSeconds(1.0f);
         anim.SetBool("InCombat", true);
-    } */ 
+    }
 }

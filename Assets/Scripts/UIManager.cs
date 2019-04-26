@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     private static UIManager _instance;
 
     public static UIManager Instance
+
     {
         get
         {
@@ -37,10 +38,9 @@ public class UIManager : MonoBehaviour
         _instance = this;
     }
 
-
-
     public GameObject gameEndScreen;
     public Text winnerText;
+    public Text diamondText;
 
     public void DisplayGameEndScreen(string text)
     {

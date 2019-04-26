@@ -8,7 +8,7 @@ public class SoundManagerScript : MonoBehaviour {
 
     public enum Sound
     {
-        MainMenu, PlayerAttack, PlayerDie, PlayerHurt, PlayerRun, SmallYetiHurt, stab, YetiDie, YetiHurt,
+        MainMenu, PlayerAttack, swordswing, PlayerJump, PlayerDie, PlayerHurt, PlayerRun, SmallYetiHurt, stab, YetiDie, YetiHurt,
     };
     
     public static List<AudioClip> sounds = new List<AudioClip>();
@@ -31,6 +31,7 @@ public class SoundManagerScript : MonoBehaviour {
         sounds.Add(Resources.Load<AudioClip>("stab"));
         sounds.Add(Resources.Load<AudioClip>("YetiDie"));
         sounds.Add(Resources.Load<AudioClip>("YetiHurt"));
+        sounds.Add(Resources.Load<AudioClip>("swordswing"));
 
         AudioSource[] sources = GetComponents<AudioSource>();
         audioSrcSfx = sources[0];
